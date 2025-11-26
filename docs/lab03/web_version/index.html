@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clarke Transform & FFT Visualization</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h2>Controls</h2>
+            </div>
+
+            <div class="control-group">
+                <h3>Playback</h3>
+                <div class="slider-container">
+                    <label id="time-display">Time: 0.00 s</label>
+                    <input type="range" id="time-slider" min="0" max="199" value="0">
+                </div>
+                <div class="button-row">
+                    <button id="play-btn">Play</button>
+                    <button id="reset-btn">Reset</button>
+                </div>
+                <div class="checkbox-row">
+                    <input type="checkbox" id="loop-check" checked>
+                    <label for="loop-check">Loop Animation</label>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <h3>Amplitudes</h3>
+                <div class="input-group">
+                    <label>Pos Seq Harmonics:</label>
+                    <div class="harmonic-inputs">
+                        <div class="h-input">
+                            <label>H1:</label>
+                            <input type="number" id="amp-h1" value="1.0" step="0.1" min="0" max="10">
+                        </div>
+                        <div class="h-input">
+                            <label>H2:</label>
+                            <input type="number" id="amp-h2" value="0.0" step="0.1" min="0" max="10">
+                        </div>
+                        <div class="h-input">
+                            <label>H3:</label>
+                            <input type="number" id="amp-h3" value="0.0" step="0.1" min="0" max="10">
+                        </div>
+                        <div class="h-input">
+                            <label>H4:</label>
+                            <input type="number" id="amp-h4" value="0.0" step="0.1" min="0" max="10">
+                        </div>
+                        <div class="h-input">
+                            <label>H5:</label>
+                            <input type="number" id="amp-h5" value="0.0" step="0.1" min="0" max="10">
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="amp-neg">Neg Seq (Fund):</label>
+                    <input type="number" id="amp-neg" value="0.1" step="0.1" min="0" max="10">
+                </div>
+            </div>
+
+            <div class="control-group">
+                <h3>Transform Type</h3>
+                <div class="radio-group">
+                    <div>
+                        <input type="radio" id="trans-amp" name="transform-type" value="amp">
+                        <label for="trans-amp">Amplitude Invariant (k=2/3)</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="trans-power" name="transform-type" value="power" checked>
+                        <label for="trans-power">Power Invariant (k=√2/3)</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <h3>FFT Analysis</h3>
+                <div class="input-group">
+                    <label for="fft-signal-select">Select Signal:</label>
+                    <select id="fft-signal-select">
+                        <option value="Phase A">Phase A</option>
+                        <option value="Phase B">Phase B</option>
+                        <option value="Phase C">Phase C</option>
+                        <option value="Alpha">Alpha</option>
+                        <option value="Beta">Beta</option>
+                        <option value="Complex Vector">Complex Vector (α + jβ)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <h3>Visualization</h3>
+                <div class="checkbox-group">
+                    <div>
+                        <input type="checkbox" id="decomp-check">
+                        <label for="decomp-check">Decomposition Mode</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="traj-check">
+                        <label for="traj-check">Show Trajectory</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="rot-fields-check">
+                        <label for="rot-fields-check">Show Pos/Neg in Combined</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="extra-traj-check" disabled>
+                        <label for="extra-traj-check">Trajectory for Extra Fields</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar-footer">
+                <p>Power Systems Interactive Lab - 02</p>
+                <a href="mailto:felipedicler@gmail.com">felipedicler@gmail.com</a>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="plot-grid">
+                <div class="plot-container">
+                    <h3>Combined Sequence (ABC)</h3>
+                    <canvas id="field-combined"></canvas>
+                </div>
+                <div class="plot-container">
+                    <h3>Signals: Combined (ABC)</h3>
+                    <canvas id="signal-combined"></canvas>
+                </div>
+                <div class="plot-container">
+                    <h3>Clarke Transform (αβ)</h3>
+                    <canvas id="field-clarke"></canvas>
+                </div>
+                <div class="plot-container">
+                    <h3>Signals: αβ</h3>
+                    <canvas id="signal-clarke"></canvas>
+                </div>
+                <div class="plot-container fft-container">
+                    <h3>FFT Spectrum (Magnitude)</h3>
+                    <canvas id="signal-fft"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
